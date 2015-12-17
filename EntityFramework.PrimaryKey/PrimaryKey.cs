@@ -38,14 +38,7 @@ namespace EntityFramework.PrimaryKey {
 		}
 
 		public static Func<TEntity, Dictionary<String, Object>> GetFunc<TEntity>() where TEntity : class {
-			return PerAssemblyCache<TEntity>.Map.GetOrAdd(Assembly.GetCallingAssembly(),
-				assembly => {
-					var contextType = assembly.GetTypes().SingleOrDefault(x => typeof(DbContext).IsAssignableFrom(x) && x.GetConstructor(Type.EmptyTypes) != null);
-					if (contextType == null)
-						throw new Exception("Detecting primary keys without supplying a DbContext class only works when called from an assembly which contains exactly one DbContext-derived class with a public parameterless constructor");
-					using (var context = (DbContext) Activator.CreateInstance(contextType))
-						return GetFunc<TEntity>(context);
-				});
+			return GetFunc<TEntity>(Assembly.GetCallingAssembly());
 		}
 
 		internal static Func<TEntity, Dictionary<String, Object>> GetFunc<TEntity>(Assembly assembly) where TEntity : class {
