@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
@@ -26,10 +27,10 @@ namespace EntityFramework.PrimaryKey {
 						keyProperties = typeof(TEntity).GetProperties(BindingFlags.Public | BindingFlags.Instance).Where(x => keyNames.Contains(x.Name)).ToArray();
 					}
 					return entity => {
-						var dictionary = new PrimaryKeyDictionary<TEntity>();
+						var dictionary = new Dictionary<String, Object>(keyProperties.Length);
 						foreach (var keyProperty in keyProperties)
 							dictionary.Add(keyProperty.Name, GetPropertyGetterFunc<TEntity>(keyProperty).Invoke(entity));
-						return dictionary;
+						return new PrimaryKeyDictionary<TEntity>(dictionary);
 					};
 				});
 		}

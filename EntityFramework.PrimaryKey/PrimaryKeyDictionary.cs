@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace EntityFramework.PrimaryKey {
-	public class PrimaryKeyDictionary<TEntity> : Dictionary<String, Object>, IEquatable<Dictionary<String, Object>> where TEntity : class {
+	public class PrimaryKeyDictionary<TEntity> : ReadOnlyDictionary<String, Object>, IEquatable<Dictionary<String, Object>> where TEntity : class {
 		public Type EntityType { get; } = typeof(TEntity);
 
-		internal PrimaryKeyDictionary() { }
+		internal PrimaryKeyDictionary(Dictionary<String, Object> dictionary) : base(dictionary) { }
 
 		public override Boolean Equals(Object other) {
 			if (other == null)
@@ -19,7 +20,7 @@ namespace EntityFramework.PrimaryKey {
 		}
 
 		public Boolean Equals(Dictionary<String, Object> other) {
-			if (ReferenceEquals(this, other))
+			if (ReferenceEquals(this.Dictionary, other))
 				return true;
 			return EqualsKeysAndValues(other);
 		}
@@ -27,8 +28,7 @@ namespace EntityFramework.PrimaryKey {
 		private Boolean EqualsKeysAndValues(Dictionary<String, Object> other) {
 			if (Keys.Count != other.Keys.Count)
 				return false;
-			foreach (var key in Keys)
-			{
+			foreach (var key in Keys) {
 				Object otherValue;
 				if (!other.TryGetValue(key, out otherValue))
 					return false;
