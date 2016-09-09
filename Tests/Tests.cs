@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
-
+using System.Linq;
 using EntityFramework.PrimaryKey;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -24,7 +24,7 @@ namespace Tests {
 
 	[TestClass]
 	public class SingleColumnByConvention : TestBase {
-		A e = new A { Id = 42 };
+		A e = new A { Id = 42L };
 
 		[TestMethod] public void GetKeyWithoutContext()      => Asserts(e.GetPrimaryKey());
 		[TestMethod] public void GetKeyWithContextInstance() => Asserts(e.GetPrimaryKey(context));
@@ -33,12 +33,13 @@ namespace Tests {
 		void Asserts(Dictionary<String, Object> key) {
 			Assert.AreEqual(1, key.Count);
 			Assert.AreEqual(e.Id, key[nameof(A.Id)]);
+			Assert.AreEqual(key, new Dictionary<String, Object> { [nameof(A.Id)] = e.Id });
 		}
 	}
 
 	[TestClass]
 	public class SingleColumnByAttribute : TestBase {
-		B e = new B { KeyColumn = 42 };
+		B e = new B { KeyColumn = 42L };
 		
 		[TestMethod] public void GetKeyWithoutContext()      => Asserts(e.GetPrimaryKey());
 		[TestMethod] public void GetKeyWithContextInstance() => Asserts(e.GetPrimaryKey(context));
@@ -47,12 +48,13 @@ namespace Tests {
 		void Asserts(Dictionary<String, Object> key) {
 			Assert.AreEqual(1, key.Count);
 			Assert.AreEqual(e.KeyColumn, key[nameof(B.KeyColumn)]);
+			Assert.AreEqual(key, new Dictionary<String, Object> { [nameof(B.KeyColumn)] = e.KeyColumn });
 		}
 	}
 
 	[TestClass]
 	public class SingleColumnByFluentMapping : TestBase {
-		C e = new C { IdColumn = 42 };
+		C e = new C { IdColumn = 42L };
 		
 		[TestMethod] public void GetKeyWithoutContext()      => Asserts(e.GetPrimaryKey());
 		[TestMethod] public void GetKeyWithContextInstance() => Asserts(e.GetPrimaryKey(context));
@@ -61,12 +63,13 @@ namespace Tests {
 		void Asserts(Dictionary<String, Object> key) {
 			Assert.AreEqual(1, key.Count);
 			Assert.AreEqual(e.IdColumn, key[nameof(C.IdColumn)]);
+			Assert.AreEqual(key, new Dictionary<String, Object> { [nameof(C.IdColumn)] = e.IdColumn });
 		}
 	}
 
 	[TestClass]
 	public class MultipleColumnByFluentMapping : TestBase {
-		D e = new D { Id = 42, Id2 = Guid.NewGuid(), Id3 = Guid.NewGuid(), Id4 = Guid.NewGuid() };
+		D e = new D { Id = 42L, Id2 = Guid.NewGuid(), Id3 = Guid.NewGuid(), Id4 = Guid.NewGuid() };
 
 		[TestMethod] public void GetKeyWithoutContext()      => Asserts(e.GetPrimaryKey());
 		[TestMethod] public void GetKeyWithContextInstance() => Asserts(e.GetPrimaryKey(context));
@@ -78,12 +81,13 @@ namespace Tests {
 			Assert.AreEqual(e.Id2, key[nameof(D.Id2)]);
 			Assert.AreEqual(e.Id3, key[nameof(D.Id3)]);
 			Assert.AreEqual(e.Id4, key[nameof(D.Id4)]);
+			Assert.AreEqual(key, new Dictionary<String, Object> { [nameof(D.Id)] = e.Id, [nameof(D.Id2)] = e.Id2, [nameof(D.Id3)] = e.Id3, [nameof(D.Id4)] = e.Id4 });
 		}
 	}
 
 	[TestClass]
 	public class MultipleColumnByAttribute : TestBase {
-		E e = new E { Id = 42, Id2 = Guid.NewGuid() };
+		E e = new E { Id = 42L, Id2 = Guid.NewGuid() };
 
 		[TestMethod] public void GetKeyWithoutContext()      => Asserts(e.GetPrimaryKey());
 		[TestMethod] public void GetKeyWithContextInstance() => Asserts(e.GetPrimaryKey(context));
@@ -93,6 +97,7 @@ namespace Tests {
 			Assert.AreEqual(2, key.Count);
 			Assert.AreEqual(e.Id, key[nameof(E.Id)]);
 			Assert.AreEqual(e.Id2, key[nameof(E.Id2)]);
+			Assert.AreEqual(key, new Dictionary<String, Object> { [nameof(E.Id)] = e.Id, [nameof(E.Id2)] = e.Id2 });
 		}
 	}
 
