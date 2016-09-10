@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
-using System.Linq;
 using EntityFramework.PrimaryKey;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -30,7 +29,7 @@ namespace Tests {
 		[TestMethod] public void GetKeyWithContextInstance() => Asserts(e.GetPrimaryKey(context));
 		[TestMethod] public void GetKeyWithContextType()     => Asserts(e.GetPrimaryKey<Context, A>());
 
-		void Asserts(Dictionary<String, Object> key) {
+		void Asserts(IDictionary<String, Object> key) {
 			Assert.AreEqual(1, key.Count);
 			Assert.AreEqual(e.Id, key[nameof(A.Id)]);
 			Assert.AreEqual(key, new Dictionary<String, Object> { [nameof(A.Id)] = e.Id });
@@ -45,7 +44,7 @@ namespace Tests {
 		[TestMethod] public void GetKeyWithContextInstance() => Asserts(e.GetPrimaryKey(context));
 		[TestMethod] public void GetKeyWithContextType()     => Asserts(e.GetPrimaryKey<Context, B>());
 
-		void Asserts(Dictionary<String, Object> key) {
+		void Asserts(IDictionary<String, Object> key) {
 			Assert.AreEqual(1, key.Count);
 			Assert.AreEqual(e.KeyColumn, key[nameof(B.KeyColumn)]);
 			Assert.AreEqual(key, new Dictionary<String, Object> { [nameof(B.KeyColumn)] = e.KeyColumn });
@@ -60,7 +59,7 @@ namespace Tests {
 		[TestMethod] public void GetKeyWithContextInstance() => Asserts(e.GetPrimaryKey(context));
 		[TestMethod] public void GetKeyWithContextType()     => Asserts(e.GetPrimaryKey<Context, C>());
 
-		void Asserts(Dictionary<String, Object> key) {
+		void Asserts(IDictionary<String, Object> key) {
 			Assert.AreEqual(1, key.Count);
 			Assert.AreEqual(e.IdColumn, key[nameof(C.IdColumn)]);
 			Assert.AreEqual(key, new Dictionary<String, Object> { [nameof(C.IdColumn)] = e.IdColumn });
@@ -75,7 +74,7 @@ namespace Tests {
 		[TestMethod] public void GetKeyWithContextInstance() => Asserts(e.GetPrimaryKey(context));
 		[TestMethod] public void GetKeyWithContextType()     => Asserts(e.GetPrimaryKey<Context, D>());
 
-		void Asserts(Dictionary<String, Object> key) {
+		void Asserts(IDictionary<String, Object> key) {
 			Assert.AreEqual(4, key.Count);
 			Assert.AreEqual(e.Id, key[nameof(D.Id)]);
 			Assert.AreEqual(e.Id2, key[nameof(D.Id2)]);
@@ -93,7 +92,7 @@ namespace Tests {
 		[TestMethod] public void GetKeyWithContextInstance() => Asserts(e.GetPrimaryKey(context));
 		[TestMethod] public void GetKeyWithContextType()     => Asserts(e.GetPrimaryKey<Context, E>());
 
-		void Asserts(Dictionary<String, Object> key) {
+		void Asserts(IDictionary<String, Object> key) {
 			Assert.AreEqual(2, key.Count);
 			Assert.AreEqual(e.Id, key[nameof(E.Id)]);
 			Assert.AreEqual(e.Id2, key[nameof(E.Id2)]);
