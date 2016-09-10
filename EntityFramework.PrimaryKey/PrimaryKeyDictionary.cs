@@ -40,12 +40,14 @@ namespace EntityFramework.PrimaryKey {
 
 		public override Int32 GetHashCode() {
 			var hashCode = 0x51ed270b;
-			foreach (var key in Keys)
-				if (key != null)
-					hashCode = (hashCode * -1521134295) + key.GetHashCode();
-			foreach (var value in Values)
-				if (value != null)
-					hashCode = (hashCode * -1521134295) + value.GetHashCode();
+			unchecked {
+				foreach (var key in Keys)
+					if (key != null)
+						hashCode = (hashCode * -1521134295) + key.GetHashCode();
+				foreach (var value in Values)
+					if (value != null)
+						hashCode = (hashCode * -1521134295) + value.GetHashCode();
+			}
 			return hashCode;
 		}
 	}
