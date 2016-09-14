@@ -1,0 +1,32 @@
+﻿{
+	"version": "1.0.0-*",
+
+	"configurations": {
+		"Debug": {
+			"buildOptions": {
+				"define": [ "DEBUG", "TRACE", "EF_CORE" ]
+			}
+		},
+		"Release": {
+			"buildOptions": {
+				"define": [ "RELEASE", "TRACE", "EF_CORE" ],
+				"optimize": true
+			}
+		}
+	},
+
+	"dependencies": {
+		"NETStandard.Library": "1.6.0",
+		"Microsoft.EntityFrameworkCore": "1.0.1"
+	},
+
+	"frameworks": {
+		"net451": {},
+		"netstandard1.3": {
+			"buildOptions": {
+				"define": [ "NET_CORE" ]
+			},
+			"imports": "dnxcore50"
+		}
+	}
+}

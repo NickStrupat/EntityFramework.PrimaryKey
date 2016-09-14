@@ -1,14 +1,19 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 
+#if EF_CORE
+using Microsoft.EntityFrameworkCore;
+namespace EntityFrameworkCore.PrimaryKey {
+#else
+using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 namespace EntityFramework.PrimaryKey {
-	public static class PrimaryKey {
+#endif
+		public static class PrimaryKey {
 		public static Func<TEntity, PrimaryKeyDictionary<TEntity>> GetFunc<TDbContext, TEntity>() where TEntity : class where TDbContext : DbContext, new() {
 			return PerDbContextTypeCache<TEntity>.Map.GetOrAdd(typeof(TDbContext),
 				type => {
@@ -22,8 +27,12 @@ namespace EntityFramework.PrimaryKey {
 				type => {
 					PropertyInfo[] keyProperties;
 					using (var con = (DbContext) Activator.CreateInstance(type)) { // Make a new instance inside the lambda so we don't capture the parameter
+#if EF_CORE
+						var keyNames = con.Model.FindEntityType(typeof(TEntity)).FindPrimaryKey().Properties.Select(x => x.Name);
+#else
 						IObjectContextAdapter oca = con;
 						var keyNames = oca.ObjectContext.CreateObjectSet<TEntity>().EntitySet.ElementType.KeyMembers.Select(x => x.Name);
+#endif
 						keyProperties = typeof(TEntity).GetProperties(BindingFlags.Public | BindingFlags.Instance).Where(x => keyNames.Contains(x.Name)).ToArray();
 					}
 					return entity => {
@@ -46,7 +55,7 @@ namespace EntityFramework.PrimaryKey {
 		}
 
 		public static Func<TEntity, PrimaryKeyDictionary<TEntity>> GetFunc<TEntity>() where TEntity : class {
-			return GetFunc<TEntity>(Assembly.GetCallingAssembly());
+			return GetFunc<TEntity>(typeof(TEntity).GetTypeInfo().Assembly);
 		}
 
 		internal static Func<TEntity, PrimaryKeyDictionary<TEntity>> GetFunc<TEntity>(Assembly assembly) where TEntity : class {
