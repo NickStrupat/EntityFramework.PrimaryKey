@@ -1,5 +1,13 @@
 ﻿{
 	"version": "1.1.1-*",
+	"title": "EntityFrameworkCore.PrimaryKey",
+	"description": "Retrieve the primary key (including composite keys) from any entity",
+	"authors": [ "Nick Strupat" ],
+	"packOptions": {
+		"tags": [ "entity-framework-core", "entityframeworkcore", "originalvalues" ],
+		"projectUrl": "https://github.com/NickStrupat/EntityFramework.PrimaryKey",
+		"licenseUrl": "https://raw.githubusercontent.com/NickStrupat/EntityFramework.PrimaryKey/master/LICENSE"
+	},
 
 	"configurations": {
 		"Debug": {
