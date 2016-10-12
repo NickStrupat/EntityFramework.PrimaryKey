@@ -13,7 +13,7 @@ using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 namespace EntityFramework.PrimaryKey {
 #endif
-		public static class PrimaryKey {
+	public static class PrimaryKey {
 		public static Func<TEntity, PrimaryKeyDictionary<TEntity>> GetFunc<TDbContext, TEntity>() where TEntity : class where TDbContext : DbContext, new() {
 			return PerDbContextTypeCache<TEntity>.Map.GetOrAdd(typeof(TDbContext),
 				type => {
