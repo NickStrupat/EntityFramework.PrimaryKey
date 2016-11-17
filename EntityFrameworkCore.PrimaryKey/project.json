@@ -24,7 +24,6 @@
 	},
 
 	"dependencies": {
-		"NETStandard.Library": "1.6.0",
 		"Microsoft.EntityFrameworkCore": "1.0.1"
 	},
 
@@ -33,6 +32,9 @@
 		"netstandard1.3": {
 			"buildOptions": {
 				"define": [ "NET_CORE" ]
+			},
+			"dependencies": {
+				"NETStandard.Library": "1.6.0"
 			},
 			"imports": "dnxcore50"
 		}
