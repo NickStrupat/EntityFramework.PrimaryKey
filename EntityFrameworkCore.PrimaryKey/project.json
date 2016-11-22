@@ -24,7 +24,7 @@
 	},
 
 	"dependencies": {
-		"Microsoft.EntityFrameworkCore": "1.0.1"
+		"Microsoft.EntityFrameworkCore": "1.1.0"
 	},
 
 	"frameworks": {
@@ -34,7 +34,8 @@
 				"define": [ "NET_CORE" ]
 			},
 			"dependencies": {
-				"NETStandard.Library": "1.6.0"
+				"NETStandard.Library": "1.6.1",
+				"System.Reflection.TypeExtensions": "4.3.0"
 			},
 			"imports": "dnxcore50"
 		}
