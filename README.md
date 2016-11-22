@@ -1,9 +1,10 @@
 # EntityFramework.PrimaryKey
-Retrieve the primary key (including composite keys) from any entity as a dictionary
+Retrieve the primary key (including composite keys) from any entity as a dictionary.
 
-NuGet package listed on nuget.org at https://www.nuget.org/packages/EntityFramework.PrimaryKey/
-
-[![NuGet Status](http://img.shields.io/nuget/v/EntityFramework.PrimaryKey.svg?style=flat)](https://www.nuget.org/packages/EntityFramework.PrimaryKey/)
+| EF version | .NET support                          | NuGet package                                                                                                                                                  |
+|:-----------|:--------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| 6.1.3      | == 4.0 &#124;&#124; >= 4.5            | [![NuGet Status](http://img.shields.io/nuget/v/EntityFramework.PrimaryKey.svg?style=flat)](https://www.nuget.org/packages/EntityFramework.PrimaryKey/)         |
+| Core 1.1   | >= 4.5.1 &#124;&#124; >= Standard 1.3 | [![NuGet Status](http://img.shields.io/nuget/v/EntityFrameworkCore.PrimaryKey.svg?style=flat)](https://www.nuget.org/packages/EntityFrameworkCore.PrimaryKey/) |
 
 ## Usage
 
