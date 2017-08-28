@@ -4,12 +4,10 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Xunit;
 
-#if EF_CORE
+#if NETSTANDARD2_0
 using Microsoft.EntityFrameworkCore;
 namespace EntityFrameworkCore.PrimaryKey.TestsCore {
 #else
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
 using EntityFramework.PrimaryKey;
 namespace EntityFramework.PrimaryKey.Tests {
@@ -79,7 +77,7 @@ namespace EntityFramework.PrimaryKey.Tests {
 		}
 	}
 
-#if !EF_CORE
+#if !NETSTANDARD2_0
 	public class MultipleColumnByAttribute : TestBase {
 		E e = new E { Id = 42L, Id2 = Guid.NewGuid() };
 
@@ -120,7 +118,7 @@ namespace EntityFramework.PrimaryKey.Tests {
 		public virtual String Name { get; set; }
 	}
 
-#if !EF_CORE
+#if !NETSTANDARD2_0
 	public class E {
 		[Key, Column(Order = 0)]
 		public virtual Int64 Id { get; set; }
@@ -135,14 +133,14 @@ namespace EntityFramework.PrimaryKey.Tests {
 		public virtual DbSet<B> Bs { get; protected set; }
 		public virtual DbSet<C> Cs { get; protected set; }
 		public virtual DbSet<D> Ds { get; protected set; }
-#if !EF_CORE
+#if !NETSTANDARD2_0
 		public virtual DbSet<E> Es { get; protected set; }
 #endif
 
-#if EF_CORE
+#if NETSTANDARD2_0
 		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {
 			base.OnConfiguring(optionsBuilder);
-			optionsBuilder.UseInMemoryDatabase();
+			optionsBuilder.UseInMemoryDatabase("Tests");
 		}
 		protected override void OnModelCreating(ModelBuilder modelBuilder) {
 #else

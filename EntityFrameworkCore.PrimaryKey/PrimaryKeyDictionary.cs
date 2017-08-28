@@ -2,16 +2,12 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
-#if EF_CORE
+#if NETSTANDARD2_0
 namespace EntityFrameworkCore.PrimaryKey {
 #else
 namespace EntityFramework.PrimaryKey {
 #endif
-#if NET40
-	public class PrimaryKeyDictionary<TEntity> : Dictionary<String, Object>, IEquatable<Dictionary<String, Object>> where TEntity : class {
-#else
 	public class PrimaryKeyDictionary<TEntity> : ReadOnlyDictionary<String, Object>, IEquatable<Dictionary<String, Object>> where TEntity : class {
-#endif
 		public Type EntityType { get; } = typeof(TEntity);
 
 		internal PrimaryKeyDictionary(Dictionary<String, Object> dictionary) : base(dictionary) { }
@@ -21,33 +17,20 @@ namespace EntityFramework.PrimaryKey {
 				return false;
 			if (ReferenceEquals(this, other))
 				return true;
-			var pkd = other as Dictionary<String, Object>;
-			if (pkd == null)
+		    if (!(other is Dictionary<String, Object> pkd))
 				return false;
 			return EqualsKeysAndValues(pkd);
 		}
 
-		public Boolean Equals(Dictionary<String, Object> other) {
-#if NET40
-			if (ReferenceEquals(this, other))
-#else
-			if (ReferenceEquals(this.Dictionary, other))
-#endif
-				return true;
-			return EqualsKeysAndValues(other);
-		}
+		public Boolean Equals(Dictionary<String, Object> other) => ReferenceEquals(Dictionary, other) || EqualsKeysAndValues(other);
 
-		private Boolean EqualsKeysAndValues(Dictionary<String, Object> other) {
+	    private Boolean EqualsKeysAndValues(Dictionary<String, Object> other) {
 			if (Keys.Count != other.Keys.Count)
 				return false;
-			foreach (var key in Keys) {
-				Object otherValue;
-				if (!other.TryGetValue(key, out otherValue))
-					return false;
-				if (!this[key].Equals(otherValue))
-					return false;
-			}
-			return true;
+		    foreach (var key in Keys)
+		        if (!other.TryGetValue(key, out var otherValue) || !this[key].Equals(otherValue))
+		            return false;
+		    return true;
 		}
 
 		public override Int32 GetHashCode() {

@@ -1,0 +1,33 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <Description>Retrieve the primary key (including composite keys) from any entity</Description>
+    <AssemblyTitle>EntityFrameworkCore.PrimaryKey</AssemblyTitle>
+    <VersionPrefix>1.1.2</VersionPrefix>
+    <Authors>Nick Strupat</Authors>
+    <AssemblyName>EntityFrameworkCore.PrimaryKey</AssemblyName>
+    <PackageId>EntityFrameworkCore.PrimaryKey</PackageId>
+    <PackageTags>entity-framework-core;entityframeworkcore;originalvalues</PackageTags>
+    <PackageProjectUrl>https://github.com/NickStrupat/EntityFramework.PrimaryKey</PackageProjectUrl>
+    <PackageLicenseUrl>https://raw.githubusercontent.com/NickStrupat/EntityFramework.PrimaryKey/master/LICENSE</PackageLicenseUrl>
+    <AssemblyVersion>1.2.0.0</AssemblyVersion>
+    <FileVersion>1.2.0.0</FileVersion>
+    <Version>1.2.0</Version>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.0.0" />
+    <PackageReference Include="System.Reflection.TypeExtensions" Version="4.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Update="NETStandard.Library" Version="2.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Properties\" />
+  </ItemGroup>
+
+</Project>

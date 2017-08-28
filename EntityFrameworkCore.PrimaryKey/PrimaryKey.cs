@@ -5,7 +5,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 
-#if EF_CORE
+#if NETSTANDARD2_0
 using Microsoft.EntityFrameworkCore;
 namespace EntityFrameworkCore.PrimaryKey {
 #else
@@ -27,7 +27,7 @@ namespace EntityFramework.PrimaryKey {
 				type => {
 					PropertyInfo[] keyProperties;
 					using (var con = (DbContext) Activator.CreateInstance(type)) { // Make a new instance inside the lambda so we don't capture the parameter
-#if EF_CORE
+#if NETSTANDARD2_0
 						var keyNames = con.Model.FindEntityType(typeof(TEntity)).FindPrimaryKey().Properties.Select(x => x.Name);
 #else
 						IObjectContextAdapter oca = con;

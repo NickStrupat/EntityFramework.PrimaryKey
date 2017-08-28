@@ -1,7 +1,6 @@
-﻿using System;
-using System.Reflection;
+﻿using System.Reflection;
 
-#if EF_CORE
+#if NETSTANDARD2_0
 using Microsoft.EntityFrameworkCore;
 namespace EntityFrameworkCore.PrimaryKey {
 #else
@@ -30,9 +29,5 @@ namespace EntityFramework.PrimaryKey {
 		where TDbContext : DbContext, new() {
 			return PrimaryKey.GetFunc<TDbContext, TEntity>().Invoke(entity);
 		}
-
-#if NET40
-		internal static Type GetTypeInfo(this Type type) => type;
-#endif
 	}
 }
