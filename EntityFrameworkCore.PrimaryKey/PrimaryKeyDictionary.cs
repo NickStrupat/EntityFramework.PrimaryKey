@@ -17,20 +17,20 @@ namespace EntityFramework.PrimaryKey {
 				return false;
 			if (ReferenceEquals(this, other))
 				return true;
-		    if (!(other is Dictionary<String, Object> pkd))
+			if (!(other is Dictionary<String, Object> pkd))
 				return false;
 			return EqualsKeysAndValues(pkd);
 		}
 
 		public Boolean Equals(Dictionary<String, Object> other) => ReferenceEquals(Dictionary, other) || EqualsKeysAndValues(other);
 
-	    private Boolean EqualsKeysAndValues(Dictionary<String, Object> other) {
+		private Boolean EqualsKeysAndValues(Dictionary<String, Object> other) {
 			if (Keys.Count != other.Keys.Count)
 				return false;
-		    foreach (var key in Keys)
-		        if (!other.TryGetValue(key, out var otherValue) || !this[key].Equals(otherValue))
-		            return false;
-		    return true;
+			foreach (var key in Keys)
+				if (!other.TryGetValue(key, out var otherValue) || !this[key].Equals(otherValue))
+					return false;
+			return true;
 		}
 
 		public override Int32 GetHashCode() {
